@@ -29,12 +29,23 @@
 
   </section>
 
+  <div id="modal" class="hidden container m-2 p-2 w-72 mx-auto mt-24 rounded shadow-lg">
+    <form action="#" class="flex flex-col gap-4">
+    <label for="taskName">insert new task</label>
+    <input id="taskName" class="border border-slate-900 rounded p-2" type="text">
+    <label for="taskDetail">insert task detail</label>
+    <textarea name="detail" class="border border-slate-900 h-12 rounded" id="taskDetail" cols="30" rows="10"></textarea>
+    <input id="confirmTask" type="submit" placeholder="submit" class=" bg-slate-900 text-white p-2 rounded">
+    </form>
+  </div>
+
   <section id="addButton" class="absolute bottom-0 w-full">
     <div class="flex flex-row justify-items-center">
-      <button id="addTask" class="bg-slate-900 text-white p-2 m-2 w-32 rounded mx-auto">
+      <button id="newTask" class="bg-slate-900 text-white p-2 m-2 w-32 rounded mx-auto">
         <i class="fa-solid fa-plus"></i> Add task
       </button>
     </div>
   </section>
 </body>
+<script src="../app/index.js" type="text/javascript"></script>
 </html>
