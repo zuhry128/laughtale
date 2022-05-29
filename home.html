@@ -25,16 +25,22 @@
     </div>
   </section>
 
-  <section id="data-list">
-
+  <section id="data-list" class="container-fluid justify-center ">
+    <!-- <div id="task-card" class="flex flex-row m-2 p-4 w-96 mx-auto justify-between rounded bg-red-400">
+      <div class="flex flex-col">
+      <h3 id="taskTitle" class="font-sans font-semibold text-2xl">Task title</h3>
+      <h5 id="taskDetail" class="font-sans font-normal text-xl">details</h5>
+      </div>
+      <button type="submit" class="font-sans font-semibold text-xl">Done</button>
+    </div> -->
   </section>
 
-  <div id="modal" class="hidden container m-2 p-2 w-72 mx-auto mt-24 rounded shadow-lg">
+  <div id="modal" class="hidden absolute m-2 p-2 w-72 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded shadow-lg bg-white">
     <form action="#" class="flex flex-col gap-4">
     <label for="taskName">insert new task</label>
-    <input id="taskName" class="border border-slate-900 rounded p-2" type="text">
+    <input id="taskName" class="border border-slate-900 rounded p-2" type="text" required>
     <label for="taskDetail">insert task detail</label>
-    <textarea name="detail" class="border border-slate-900 h-12 rounded p-2" id="taskDetail" cols="30" rows="10"></textarea>
+    <textarea name="detail" class="border border-slate-900 h-12 rounded p-2" id="taskDetail" cols="30" rows="10" required></textarea>
     <input id="confirmTask" type="submit" placeholder="submit" class=" bg-slate-900 text-white p-2 rounded">
     </form>
   </div>
@@ -47,5 +53,5 @@
     </div>
   </section>
 </body>
-<script src="/src/app/index.js"></script>
+<script src="./index.js"></script>
 </html>
