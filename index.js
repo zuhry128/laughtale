@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener(RENDER_EVENT, function () {
-  const tasklists = document.getElementById("data-list");
+  const tasklists = document.getElementById("unfinishedBook");
 
   tasklists.innerHTML = "";
 
