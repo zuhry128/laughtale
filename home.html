@@ -4,39 +4,40 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/public/styles/output.css">
-  <script src="https://kit.fontawesome.com/ba4a7e1428.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <title>Welcome to application</title>
 </head>
 <body>
   <section id="header">
-    <div class="flex flex-row justify-between align-middle">
-    <h1 class="m-4 text-2xl font-sans font-semibold">Welcome</h1>
-    <i class="fa-solid fa-user fa-xl m-4 self-center"></i>
-    </div>
-    <div id="callendarContainer" class="container-fluid flex flex-row gap-4 mt-4 justify-items-center justify-center">
-      <h5>Sun</h5>
-      <h5>Mon</h5>
-      <h5>Tue</h5>
-      <h5>Wed</h5>
-      <h5>Thu</h5>
-      <h5>Fri</h5>
-      <h5>Sat</h5>
+    <div class="flex flex-row justify-center align-middle bg-slate-800">
+    <h1 class="m-4 text-2xl font-sans font-semibold text-white text-center">Welcome</h1>
     </div>
   </section>
 
   <section id="unfinishedBook" class="container-fluid justify-center ">
   </section>
 
+  <div class="relative flex py-5 items-center">
+    <div class="flex-grow border-t border-gray-400"></div>
+    <div class="flex-grow border-t border-gray-400"></div>
+  </div>
+
   <section id="finishedBook" class="container-fluid justify-center ">
   </section>
 
-  <div id="modal" class="hidden absolute m-2 p-2 w-72 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded shadow-lg bg-white">
+    <div id="modal" class="hidden absolute m-2 p-2 w-72 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded shadow-lg bg-white">
     <form action="#" class="flex flex-col gap-4">
-    <label for="taskName">insert new task</label>
-    <input id="taskName" class="border border-slate-900 rounded p-2" type="text" required>
-    <label for="taskDetail">insert task detail</label>
-    <textarea name="detail" class="border border-slate-900 h-12 rounded p-2" id="taskDetail" cols="30" rows="10" required></textarea>
+    <label for="bookTitle">judul buku</label>
+    <input id="bookTitle" class="border border-slate-900 rounded p-2" type="text">
+
+    <label for="bookAuthor">pengarang buku</label>
+    <input id="bookAuthor" type="text" name="bookAuthor" class="border border-slate-900 h-12 rounded p-2" id="taskDetail" cols="30" rows="10" required></input>
+
+    <label for="bookPublisher">penerbit buku</label>
+    <input id="bookPublisher" type="text" name="bookPublisher" class="border border-slate-900 h-12 rounded p-2" id="taskDetail" cols="30" rows="10" required></input>
+
+    <label for="bookReleasedDate">tanggal terbit</label>  
+    <input id="bookReleasedDate" type="date" name="bookReleasedDate" class="border border-slate-900 h-12 rounded p-2" id="taskDetail" cols="30" rows="10" required></input>
     <input id="confirmTask" type="submit" placeholder="submit" class=" bg-slate-900 text-white p-2 rounded">
     </form>
   </div>

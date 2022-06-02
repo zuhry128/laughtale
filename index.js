@@ -10,18 +10,39 @@ document.addEventListener("DOMContentLoaded", function () {
     load();
     console.log(bucket);
   }
+
+  const uncompletedTODOList = document.getElementById("unfinishedBook");
+  const listCompleted = document.getElementById("finishedBook");
+
+  // clearing list item
+  uncompletedTODOList.innerHTML = "";
+  listCompleted.innerHTML = "";
+
+  for (const book of bucket) {
+    const element = renderData(book);
+    if (book.isCompleted) {
+      listCompleted.append(element);
+    } else {
+      uncompletedTODOList.append(element);
+    }
+  }
 });
 
 document.addEventListener(RENDER_EVENT, function () {
-  const tasklists = document.getElementById("unfinishedBook");
+  const uncompletedTODOList = document.getElementById("unfinishedBook");
+  const listCompleted = document.getElementById("finishedBook");
 
-  tasklists.innerHTML = "";
+  // clearing list item
+  uncompletedTODOList.innerHTML = "";
+  listCompleted.innerHTML = "";
 
-  for (const task of bucket) {
-    const taskCard = renderData(task);
-    tasklists.append(taskCard);
-    console.log("tasklist: ", task);
-    console.log("taskcard: ", taskCard);
+  for (const book of bucket) {
+    const element = renderData(book);
+    if (book.isCompleted) {
+      listCompleted.append(element);
+    } else {
+      uncompletedTODOList.append(element);
+    }
   }
 });
 
@@ -66,36 +87,53 @@ function generateID() {
   return +new Date();
 }
 
-function generateObject(id, task, detail) {
+function generateObject(
+  id,
+  bookTitle,
+  bookAuthor,
+  bookPublisher,
+  bookReleasedDate,
+  isCompleted
+) {
   return {
     id,
-    task,
-    detail,
+    bookTitle,
+    bookAuthor,
+    bookPublisher,
+    bookReleasedDate,
+    isCompleted,
   };
 }
 
 function renderData(object) {
-  const { id, task, detail } = object;
+  const {
+    id,
+    bookTitle,
+    bookAuthor,
+    bookPublisher,
+    bookReleasedDate,
+    isCompleted,
+  } = object;
 
-  const taskTitle = document.createElement("h3");
-  taskTitle.classList.add("font-sans", "font-semibold", "text-2xl");
-  taskTitle.innerText = task;
+  const title = document.createElement("h3");
+  title.classList.add("font-sans", "font-semibold", "text-2xl");
+  title.innerText = bookTitle;
 
-  const detailTitle = document.createElement("h5");
-  detailTitle.classList.add("font-sans", "font-normal", "text-xl");
-  detailTitle.innerText = detail;
+  const author = document.createElement("h4");
+  author.classList.add("font-sans", "font-semibold", "text-xl");
+  author.innerText = bookAuthor;
+
+  const publisher = document.createElement("h5");
+  publisher.classList.add("font-sans", "font-normal", "text-xl");
+  publisher.innerText = bookPublisher;
+
+  const releasedDate = document.createElement("h5");
+  releasedDate.classList.add("font-sans", "font-normal", "text-xl");
+  releasedDate.innerText = bookReleasedDate;
 
   const container = document.createElement("div");
   container.classList.add("flex", "flex-col");
-  container.append(taskTitle, detailTitle);
-
-  const doneButton = document.createElement("button");
-  doneButton.classList.add("font-sans", "font-semibold", "text-xl");
-  doneButton.setAttribute("id", "doneButton");
-  doneButton.innerHTML = "Done";
-  doneButton.addEventListener("click", function () {
-    deleteData(id);
-  });
+  container.append(title, author, publisher, releasedDate);
 
   const card = document.createElement("div");
   card.classList.add(
@@ -109,17 +147,44 @@ function renderData(object) {
     "rounded",
     "bg-red-400"
   );
-  card.append(container, doneButton);
   card.setAttribute("id", id);
 
+  if (isCompleted == false) {
+    const doneButton = document.createElement("button");
+    doneButton.classList.add("font-sans", "font-semibold", "text-xl");
+    doneButton.setAttribute("id", "doneButton");
+    doneButton.innerHTML = "Done";
+    doneButton.addEventListener("click", function () {
+      addTaskToCompleted(id);
+    });
+    card.append(container, doneButton);
+  } else {
+    const deleteButton = document.createElement("button");
+    deleteButton.classList.add("font-sans", "font-semibold", "text-xl");
+    deleteButton.setAttribute("id", "doneButton");
+    deleteButton.innerHTML = "delete";
+    deleteButton.addEventListener("click", function () {
+      deleteData(id);
+    });
+    card.append(container, deleteButton);
+  }
   return card;
 }
 
 function addData() {
-  const taskName = document.getElementById("taskName").value;
-  const taskDetail = document.getElementById("taskDetail").value;
+  const bookTitle = document.getElementById("bookTitle").value;
+  const bookAuthor = document.getElementById("bookAuthor").value;
+  const bookPublisher = document.getElementById("bookPublisher").value;
+  const bookReleasedDate = document.getElementById("bookReleasedDate").value;
   const generatedID = generateID();
-  const object = generateObject(generatedID, taskName, taskDetail);
+  const object = generateObject(
+    generatedID,
+    bookTitle,
+    bookAuthor,
+    bookPublisher,
+    bookReleasedDate,
+    false
+  );
   bucket.push(object);
   save();
 }
@@ -129,6 +194,15 @@ function save() {
     const parsed = JSON.stringify(bucket);
     localStorage.setItem(storagekey, parsed);
   }
+}
+
+function addTaskToCompleted(id) {
+  const target = findID(id);
+  if (target == null) return;
+
+  target.isCompleted = true;
+  document.dispatchEvent(new Event(RENDER_EVENT));
+  save();
 }
 
 function load() {
