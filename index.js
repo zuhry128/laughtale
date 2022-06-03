@@ -145,7 +145,7 @@ function renderData(object) {
     "mx-auto",
     "justify-between",
     "rounded",
-    "bg-red-400"
+    "bg-slate-500"
   );
   card.setAttribute("id", id);
 
@@ -159,14 +159,22 @@ function renderData(object) {
     });
     card.append(container, doneButton);
   } else {
+    const undoneButton = document.createElement("button");
+    undoneButton.classList.add("font-sans", "font-semibold", "text-xl");
+    undoneButton.setAttribute("id", "undoneButton");
+    undoneButton.innerHTML = "undone";
+    undoneButton.addEventListener("click", function () {
+      addTaskToUncompleted(id);
+    });
+
     const deleteButton = document.createElement("button");
     deleteButton.classList.add("font-sans", "font-semibold", "text-xl");
-    deleteButton.setAttribute("id", "doneButton");
+    deleteButton.setAttribute("id", "deleteButton");
     deleteButton.innerHTML = "delete";
     deleteButton.addEventListener("click", function () {
       deleteData(id);
     });
-    card.append(container, deleteButton);
+    card.append(container, undoneButton, deleteButton);
   }
   return card;
 }
@@ -201,6 +209,15 @@ function addTaskToCompleted(id) {
   if (target == null) return;
 
   target.isCompleted = true;
+  document.dispatchEvent(new Event(RENDER_EVENT));
+  save();
+}
+
+function addTaskToUncompleted(id) {
+  const target = findID(id);
+  if (target == null) return;
+
+  target.isCompleted = false;
   document.dispatchEvent(new Event(RENDER_EVENT));
   save();
 }
